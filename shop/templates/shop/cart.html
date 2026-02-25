@@ -1,0 +1,43 @@
+<h1>Your Adventurer's Pouch</h1>
+<a href="{% url 'home' %}">← Back to the Shop</a>
+<hr>
+
+{% if cart and cart.items.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price (ea)</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart_item in cart.items.all %}
+            <tr>
+                <td>{{ cart_item.item.name }}</td>
+                <td>{{ cart_item.quantity }}</td>
+                <td>{{ cart_item.item.price }} Gold</td>
+                <td>{{ cart_item.subtotal }} Gold</td> 
+                <td>
+                    <a href="{% url 'adjust_quantity' cart_item.id 'remove' %}" style="text-decoration:none;">➖</a>
+                    <span style="margin: 0 10px; font-weight: bold;">{{ cart_item.quantity }}</span>
+                    <a href="{% url 'adjust_quantity' cart_item.id 'add' %}" style="text-decoration:none;">➕</a>
+                </td>
+                <td>
+                    <a href="{% url 'remove_from_cart' cart_item.id %}" style="color: red;">Discard</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Total Gold: {{ cart.get_total_gold }}</h3>
+
+    <form action="{% url 'checkout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" style="background-color: gold; padding: 10px;">Complete Purchase (Checkout)</button>
+    </form>
+{% else %}
+    <p>Your pouch is empty. Go find some loot!</p>
+{% endif %}

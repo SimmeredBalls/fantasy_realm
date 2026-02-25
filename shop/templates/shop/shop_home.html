@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Dragon's Hoard - Shop</title>
+</head>
+<body>
+    {% extends 'shop/base.html' %}
+
+    {% block content %}
+        <h1>Available Loot</h1>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            {% for item in items %}
+                <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 200px;">
+                    {% if item.image_url %}
+                        <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width: 100px; height: 100px; object-fit: contain;">
+                    {% endif %}
+                    
+                    <h3>{{ item.name }}</h3>
+                    <p><strong>Type:</strong> {{ item.get_category_display }}</p>
+                    <p><strong>Rarity:</strong> {{ item.get_rarity_display }}</p>
+                    <p><em>{{ item.description }}</em></p>
+                    <p><strong>Price:</strong> {{ item.price }} Gold</p>
+                    <p>Stock: {{ item.stock }}</p>
+
+                    {% if user.is_authenticated %}
+                        {% if item.stock > 0 %}
+                            <a href="{% url 'add_to_cart' item.id %}">
+                                <button type="button">Add to Pouch</button>
+                            </a>
+                        {% else %}
+                            <button disabled style="color: gray;">Sold Out</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>The shop is currently empty. Check back after the next raid!</p>
+            {% endfor %}
+        </div>
+    {% endblock %}
+</body>
+</html>

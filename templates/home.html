@@ -1,0 +1,12 @@
+<h1>The Fantasy Shop</h1>
+
+{% if user.is_authenticated %}
+  <p>Welcome, Adventurer <strong>{{ user.username }}</strong>!</p>
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Leave the Realm (Logout)</button>
+  </form>
+{% else %}
+  <p>You are a stranger here.</p>
+  <a href="{% url 'login' %}">Login</a>
+{% endif %}

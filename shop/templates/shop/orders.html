@@ -1,0 +1,19 @@
+<h1>Adventurer's Quest Log (Order History)</h1>
+<a href="{% url 'home' %}">← Back to Shop</a> | 
+<a href="{% url 'view_cart' %}">View Pouch</a>
+<hr>
+
+{% if orders %}
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        {% for order in orders %}
+            <div style="border: 1px dashed #555; padding: 15px; border-radius: 5px; background-color: #f9f9f9;">
+                <h3>Transaction #{{ order.id }}</h3>
+                <p><strong>Date:</strong> {{ order.ordered_at|date:"F j, Y, g:i a" }}</p>
+                <p><strong>Items Acquired:</strong> {{ order.summary }}</p>
+                <p><strong>Total Gold Spent:</strong> <span style="color: #b8860b; font-weight: bold;">{{ order.total_gold }}G</span></p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Your history is blank. You haven't completed any shop quests yet.</p>
+{% endif %}

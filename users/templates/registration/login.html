@@ -1,0 +1,13 @@
+<h2>Identify Yourself</h2>
+
+{% if form.errors %}
+    <p style="color: red;">Your credentials do not match any known adventurer.</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
+
+<p>New here? <a href="{% url 'register' %}">Sign the Guild Roster</a></p>
