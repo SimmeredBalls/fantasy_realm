@@ -10,3 +10,23 @@ Follow these steps to set up the realm on your local machine:
    ```bash
    git clone [https://github.com/YOUR_USERNAME/fantasy_realm.git](https://github.com/YOUR_USERNAME/fantasy_realm.git)
    cd fantasy_realm
+
+2. **Create and activate a Virtual Environment**
+    python -m venv venv
+    # Windows:
+    venv\Scripts\activate
+    # Mac/Linux:
+    source venv/bin/activate
+
+3. **Install Dependencies**
+    pip install -r requirements.txt
+
+4. **Initalize the Database**
+    python manage.py migrate
+
+5. **Create Admin**
+    python manage.py createsuperuser
+
+6. **Start the Server**
+    python manage.py runserver
+    
